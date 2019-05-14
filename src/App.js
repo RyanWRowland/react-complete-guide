@@ -11,11 +11,15 @@ class App extends Component {
     ]
   }
 
-  switchNameHandler = () => {
+  switchNameHandler = (name) => {
     // do not mutate state directly: DO NOT this.state.item = 'new item'
-    const sorted_persons = [...this.state.persons].sort((a, b) => a.age - b.age);
+    // const sorted_persons = [...this.state.persons].sort((a, b) => a.age - b.age);
     this.setState({
-      persons: sorted_persons
+      persons: [
+        { name: name, age: 20 },
+        { name: 'Ryan', age: 23 },
+        { name: 'Zach', age: 24 },
+      ]
     });
   }
 
@@ -24,10 +28,17 @@ class App extends Component {
       <div className="App">
         <h1>Hi, I'm a React App</h1>
         <p>This is really working!</p>
-        <button onClick={this.switchNameHandler}>Switch Name</button>
-        <Person name={this.state.persons[0].name} age={this.state.persons[0].age}>My Hobbies: Board Games</Person>
-        <Person name={this.state.persons[1].name} age={this.state.persons[1].age} />
-        <Person name={this.state.persons[2].name} age={this.state.persons[2].age} />
+        <button onClick={() => this.switchNameHandler('Muriel')}>Switch Name</button>
+        <Person
+          name={this.state.persons[0].name}
+          age={this.state.persons[0].age}
+          click={this.switchNameHandler.bind(this, 'MacGyver')} >My Hobbies: Board Games</Person>
+        <Person
+          name={this.state.persons[1].name}
+          age={this.state.persons[1].age} />
+        <Person
+          name={this.state.persons[2].name}
+          age={this.state.persons[2].age} />
       </div>
       // <h1>Another Heading</h1>
       // ^^ will not comple, must return a single element
