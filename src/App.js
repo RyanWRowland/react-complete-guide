@@ -11,18 +11,6 @@ class App extends Component {
     ]
   }
 
-  switchNameHandler = (name) => {
-    // do not mutate state directly: DO NOT this.state.item = 'new item'
-    // const sorted_persons = [...this.state.persons].sort((a, b) => a.age - b.age);
-    this.setState({
-      persons: [
-        { name: name, age: 20 },
-        { name: 'Ryan', age: 23 },
-        { name: 'Zach', age: 24 },
-      ]
-    });
-  }
-
   nameChangedHandler = (e) => {
     this.setState({
       persons: [
@@ -32,6 +20,12 @@ class App extends Component {
       ],
       showPersons: false,
     });
+  }
+
+  deletePersonHandler = (personIndex) => {
+    const persons = [...this.state.persons]
+    persons.splice(personIndex, 1);
+    this.setState({ persons: persons });
   }
 
   togglePersonsHandler = () => {
@@ -51,18 +45,21 @@ class App extends Component {
 
     let persons = null;
     if (this.state.showPersons) {
+      // persons = this.state.persons.map(person => {
+      //   return (
+      //     <Person name={person.name} age={person.age} />
+      //   );
+      // });
       persons = (
         <div>
-          <Person
-            name={this.state.persons[0].name}
-            age={this.state.persons[0].age}
-            click={this.switchNameHandler.bind(this, 'MacGyver')} changed={this.nameChangedHandler}>My Hobbies: Board Games</Person>
-          <Person
-            name={this.state.persons[1].name}
-            age={this.state.persons[1].age} />
-          <Person
-            name={this.state.persons[2].name}
-            age={this.state.persons[2].age} />
+          {this.state.persons.map((person, index) => {
+            return (
+              <Person
+                click={this.deletePersonHandler.bind(this, index)}
+                name={person.name}
+                age={person.age} />
+            );
+          })}
         </div>
       );
     }
