@@ -29,7 +29,14 @@ class App extends Component {
         { name: e.target.value, age: 20 },
         { name: 'Ryan', age: 23 },
         { name: 'Zach', age: 24 },
-      ]
+      ],
+      showPersons: false,
+    });
+  }
+
+  togglePersonsHandler = () => {
+    this.setState({
+      showPersons: !this.state.showPersons
     });
   }
 
@@ -48,17 +55,22 @@ class App extends Component {
         <p>This is really working!</p>
         <button
           style={style}
-          onClick={() => this.switchNameHandler('Muriel')}>Switch Name</button>
-        <Person
-          name={this.state.persons[0].name}
-          age={this.state.persons[0].age}
-          click={this.switchNameHandler.bind(this, 'MacGyver')} changed={this.nameChangedHandler}>My Hobbies: Board Games</Person>
-        <Person
-          name={this.state.persons[1].name}
-          age={this.state.persons[1].age} />
-        <Person
-          name={this.state.persons[2].name}
-          age={this.state.persons[2].age} />
+          onClick={this.togglePersonsHandler}>Toggle Persons</button>
+        {
+          this.state.showPersons ?
+            <div>
+              <Person
+                name={this.state.persons[0].name}
+                age={this.state.persons[0].age}
+                click={this.switchNameHandler.bind(this, 'MacGyver')} changed={this.nameChangedHandler}>My Hobbies: Board Games</Person>
+              <Person
+                name={this.state.persons[1].name}
+                age={this.state.persons[1].age} />
+              <Person
+                name={this.state.persons[2].name}
+                age={this.state.persons[2].age} />
+            </div> : null
+        }
       </div>
       // <h1>Another Heading</h1>
       // ^^ will not comple, must return a single element
