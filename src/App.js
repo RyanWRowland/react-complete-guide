@@ -5,9 +5,9 @@ import Person from './Person/Person';
 class App extends Component {
   state = {
     persons: [
-      { name: 'Chuck', age: 56 },
-      { name: 'Ryan', age: 23 },
-      { name: 'Zach', age: 24 },
+      { id: 'a1', name: 'Chuck', age: 56 },
+      { id: 'b2', name: 'Ryan', age: 23 },
+      { id: 'c3', name: 'Zach', age: 24 },
     ]
   }
 
@@ -55,6 +55,7 @@ class App extends Component {
           {this.state.persons.map((person, index) => {
             return (
               <Person
+                key={person.id} // unique key prop react uses for optimization
                 click={this.deletePersonHandler.bind(this, index)}
                 name={person.name}
                 age={person.age} />
