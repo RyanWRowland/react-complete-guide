@@ -8,18 +8,20 @@ class App extends Component {
       { id: 'a1', name: 'Chuck', age: 56 },
       { id: 'b2', name: 'Ryan', age: 23 },
       { id: 'c3', name: 'Zach', age: 24 },
-    ]
+    ],
+    showPersons: false,
   }
 
-  nameChangedHandler = (e) => {
-    this.setState({
-      persons: [
-        { name: e.target.value, age: 20 },
-        { name: 'Ryan', age: 23 },
-        { name: 'Zach', age: 24 },
-      ],
-      showPersons: false,
-    });
+  nameChangedHandler = (e, id) => {
+    const personIndex = this.state.persons.findIndex(p => p.id === id);
+
+    const person = { ...this.state.persons[personIndex] };
+    person.name = e.target.value;
+
+    const persons = [...this.state.persons];
+    persons[personIndex] = person;
+
+    this.setState({ persons: persons });
   }
 
   deletePersonHandler = (personIndex) => {
@@ -56,7 +58,8 @@ class App extends Component {
             return (
               <Person
                 key={person.id} // unique key prop react uses for optimization
-                click={this.deletePersonHandler.bind(this, index)}
+                click={() => this.deletePersonHandler(index)}
+                changed={(event) => this.nameChangedHandler(event, person.id)}
                 name={person.name}
                 age={person.age} />
             );
