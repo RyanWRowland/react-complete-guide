@@ -38,20 +38,10 @@ class App extends Component {
   }
 
   render() {
-    // let persons = null;
-    // if (this.state.showPersons) {
-    //   persons = (
-    //     <Persons
-    //       persons={this.state.persons}
-    //       clicked={this.deletePersonHandler}
-    //       changed={this.nameChangedHandler} />
-    //   );
-    // }
-
-
     return (
       <div className={styles.App}>
         <Cockpit
+          title={this.props.appTitle}
           length={this.state.persons.length}
           showing={this.state.showPersons}
           clicked={this.togglePersonsHandler} />
