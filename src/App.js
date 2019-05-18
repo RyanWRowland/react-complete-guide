@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import styles from './App.module.css';
 import Person from './Person/Person';
+import ErrorBoundary from './ErrorBoundary/ErrorBoundary';
 
 class App extends Component {
   state = {
@@ -44,12 +45,14 @@ class App extends Component {
         <div>
           {this.state.persons.map((person, index) => {
             return (
-              <Person
-                key={person.id} // unique key prop react uses for optimization
-                click={() => this.deletePersonHandler(index)}
-                changed={(event) => this.nameChangedHandler(event, person.id)}
-                name={person.name}
-                age={person.age} >I am a person!</Person>
+              <ErrorBoundary // key goes out outermost element
+                key={person.id} >
+                <Person
+                  click={() => this.deletePersonHandler(index)}
+                  changed={(event) => this.nameChangedHandler(event, person.id)}
+                  name={person.name}
+                  age={person.age} >I am a person!</Person>
+              </ErrorBoundary>
             );
           })}
         </div>
