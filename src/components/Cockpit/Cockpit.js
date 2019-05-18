@@ -2,6 +2,7 @@ import React from 'react'
 import styles from './Cockpit.module.css'
 
 const Cockpit = (props) => {
+  console.log('[Cockpit.js] rendering');
   let classes = [];
   if (props.length <= 2) {
     classes.push('red');

@@ -4,6 +4,13 @@ import Persons from '../components/Persons/Persons';
 import Cockpit from '../components/Cockpit/Cockpit';
 
 class App extends Component {
+  constructor(props) {
+    super(props);
+    console.log('[App.js] constructor');
+    // this.state = {} // setting up state in constructor
+  }
+
+  // modern way of setting up state
   state = {
     persons: [
       { id: 'a1', name: 'Chuck', age: 56 },
@@ -11,6 +18,21 @@ class App extends Component {
       { id: 'c3', name: 'Zach', age: 24 },
     ],
     showPersons: false,
+  };
+
+  // if just initializing state from props, just set in constructor
+  static getDerivedStateFromProps(props, state) {
+    console.log('[App.js] getDerivedStateFromProps', props);
+    return state;
+  }
+
+  // // rarely used, mostly likely removed in the future
+  // componentWillMount() {
+  //   console.log('[App.js] componentWillMount');
+  // }
+
+  componentDidMount() {
+    console.log('[App.js] componentDidMount');
   }
 
   nameChangedHandler = (e, id) => {
@@ -38,6 +60,7 @@ class App extends Component {
   }
 
   render() {
+    console.log('[App.js] rendering')
     return (
       <div className={styles.App}>
         <Cockpit
