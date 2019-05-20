@@ -18,6 +18,7 @@ class App extends Component {
       { id: 'c3', name: 'Zach', age: 24 },
     ],
     showPersons: false,
+    showCockpit: true,
   };
 
   // if just initializing state from props, just set in constructor
@@ -33,6 +34,16 @@ class App extends Component {
 
   componentDidMount() {
     console.log('[App.js] componentDidMount');
+  }
+
+  shouldComponentUpdate(nextProps, nextState) {
+    console.log('[App.js] shouldComponentUpdate');
+    // return false; // prevent component from updating
+    return true;
+  }
+
+  componentDidUpdate() {
+    console.log('[App.js] componentDidUpdate');
   }
 
   nameChangedHandler = (e, id) => {
@@ -63,11 +74,14 @@ class App extends Component {
     console.log('[App.js] rendering')
     return (
       <div className={styles.App}>
-        <Cockpit
-          title={this.props.appTitle}
-          length={this.state.persons.length}
-          showing={this.state.showPersons}
-          clicked={this.togglePersonsHandler} />
+        <button onClick={() => this.setState({ showCockpit: !this.state.showCockpit })}>Toggle Cockpit</button>
+        {this.state.showCockpit ?
+          <Cockpit
+            title={this.props.appTitle}
+            // persons={this.state.persons} // pass persons to cockpit for useEffect hook
+            length={this.state.persons.length}
+            showing={this.state.showPersons}
+            clicked={this.togglePersonsHandler} /> : null}
         {this.state.showPersons ? // if showing persons, render persons
           <Persons
             persons={this.state.persons}
