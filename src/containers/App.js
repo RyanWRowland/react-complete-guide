@@ -93,3 +93,16 @@ class App extends Component {
 }
 
 export default App;
+
+// React DOM rendering notes
+/*
+React uses virtual DOMs to keep track of changes and
+only updates the real DOM when it detects changes and
+even then is only rendering components or areas that have changed.
+
+To me, this means that while preventing a component
+from updating or rerendering when it doesn't have to
+with shouldComponentUpdate and other methods can be an optimization,
+React, under the hood, already isn't rerendering components that haven't
+been changed.
+*/
