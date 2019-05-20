@@ -1,7 +1,10 @@
-import React, { Component } from 'react'
+import React, { PureComponent } from 'react'
 import Person from './Person/Person'
 
-class Persons extends Component {
+// if we need to check all props for changes before updating/rerendering
+// we can just use a Pure Component 
+// which does the samething as checking all props in the shouldComponentUpdate method
+class Persons extends PureComponent {
   // warns if no state defined
   // static getDerivedStateFromProps(props, state) {
   //   console.log('[Persons.js] getDerivedStateFromProps');
@@ -18,11 +21,15 @@ class Persons extends Component {
   //   console.log('[Persons.js] componentWillUpdate');
   // }
 
+  /* Already implemented by using a Pure Component
+
   // prevents component from rerendering when cockpit is toggled
   shouldComponentUpdate(nextProps, nextState) {
     console.log('[Persons.js] shouldComponentUpdate');
-    // optimization: only update/rerender if persons changes
-    return nextProps.persons !== this.props.persons;
+    // optimization: only update/rerender if any props change
+    return nextProps.persons !== this.props.persons ||
+      nextProps.changed !== this.props.changed ||
+      nextProps.clicked !== this.props.clicked;
     // IMPORTANT
     // only compares references, works because when an element changes
     // a new array is created and the state in App.js is set to the new array
@@ -30,8 +37,10 @@ class Persons extends Component {
     // if we just changed the element without creating a new array, 
     // the change would not be detected here
 
+    // returning true would update all the time even if nothing changes
     // return true; // would normally compare props and state to determine if component should update
   }
+  */
 
   getSnapshotBeforeUpdate(prevProps, prevState) {
     console.log('[Persons.js] getSnapShotBeforeUpdate');
