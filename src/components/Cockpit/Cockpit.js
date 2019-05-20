@@ -46,4 +46,6 @@ const Cockpit = (props) => {
   )
 }
 
-export default Cockpit
+export default React.memo(Cockpit);
+// React.memo optimizes functional components
+// only updates the functional component if its props change
