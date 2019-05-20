@@ -49,3 +49,11 @@ const Cockpit = (props) => {
 export default React.memo(Cockpit);
 // React.memo optimizes functional components
 // only updates the functional component if its props change
+
+// NOTE:
+// shouldComponentUpdate and React.memo are only optimizations
+// if they really don't need to update the majority of the time 
+// relative to their parent.
+// If an update to their parent means they need to update themselves
+// most of the time anyways, the extra checking if they need to update
+// can be detrimental to performance.
