@@ -27,9 +27,12 @@ class Person extends Component {
     return nextProps.name !== this.props.name || nextProps.isAuthed !== this.props.isAuthed;
   }
 
+  static contextType = AuthContext;
+
   componentDidMount() {
     // this.inputElement.focus();
     this.inputElementRef.current.focus();
+    console.log(this.context.authenticated); // can access context outside JSX
   }
 
 
@@ -39,9 +42,7 @@ class Person extends Component {
     // we can wrap our elements in a very simple higher order component
     return (
       <Aux>
-        <AuthContext.Consumer>
-          {context => context.authenticated ? <p> Authenticated </p> : <p> Please log in </p>}
-        </AuthContext.Consumer>
+        {this.context.authenticated ? <p> Authenticated </p> : <p> Please log in </p>}
         <p key="name/age" onClick={this.props.click}>I'm {this.props.name} and I am {this.props.age} years old!</p>
         <p key="children" className="red bold">{this.props.children}</p>
         <input

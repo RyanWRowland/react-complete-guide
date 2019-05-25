@@ -1,9 +1,12 @@
-import React, { useEffect, useRef } from 'react'
+import React, { useEffect, useRef, useContext } from 'react'
 import AuthContext from '../../context/auth-context';
 import styles from './Cockpit.module.css'
 
 const Cockpit = (props) => {
   const toggleBtnRef = useRef(null);
+  const authContext = useContext(AuthContext);
+
+  console.log(authContext.authenticated);
 
   // executes every render cycle
   useEffect(() => { // combines componentDidMount and componentDidUpdate
@@ -47,9 +50,7 @@ const Cockpit = (props) => {
         ref={toggleBtnRef}
         className={props.showing ? styles.Red : ''}
         onClick={props.clicked}>Toggle Persons</button>
-      <AuthContext.Consumer>
-        {context => <button onClick={context.login}>Login</button>}
-      </AuthContext.Consumer>
+      <button onClick={authContext.login}>Login</button>
     </div>
   )
 }
