@@ -1,4 +1,5 @@
 import React, { useEffect, useRef } from 'react'
+import AuthContext from '../../context/auth-context';
 import styles from './Cockpit.module.css'
 
 const Cockpit = (props) => {
@@ -46,19 +47,21 @@ const Cockpit = (props) => {
         ref={toggleBtnRef}
         className={props.showing ? styles.Red : ''}
         onClick={props.clicked}>Toggle Persons</button>
-      <button onClick={props.login}>Login</button>
+      <AuthContext.Consumer>
+        {context => <button onClick={context.login}>Login</button>}
+      </AuthContext.Consumer>
     </div>
   )
 }
 
 export default React.memo(Cockpit);
-// React.memo optimizes functional components
-// only updates the functional component if its props change
+    // React.memo optimizes functional components
+    // only updates the functional component if its props change
 
-// NOTE:
-// shouldComponentUpdate and React.memo are only optimizations
-// if they really don't need to update the majority of the time 
-// relative to their parent.
-// If an update to their parent means they need to update themselves
-// most of the time anyways, the extra checking if they need to update
-// can be detrimental to performance.
+    // NOTE:
+    // shouldComponentUpdate and React.memo are only optimizations
+    // if they really don't need to update the majority of the time 
+    // relative to their parent.
+    // If an update to their parent means they need to update themselves
+    // most of the time anyways, the extra checking if they need to update
+    // can be detrimental to performance.

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
+import AuthContext from '../../../context/auth-context';
 import Aux from '../../../hoc/Aux';
 import withClass from '../../../hoc/withClass';
 import styles from './Person.module.css';
@@ -34,12 +35,13 @@ class Person extends Component {
 
   render() {
     console.log('[Person.js] rendering', this.props.name);
-    console.log(this.props.isAuthed);
     // if we don't need/want a wrapping element returned
     // we can wrap our elements in a very simple higher order component
     return (
       <Aux>
-        <p>{this.props.isAuthed ? "Authenticated" : "Please log in"}</p>
+        <AuthContext.Consumer>
+          {context => context.authenticated ? <p> Authenticated </p> : <p> Please log in </p>}
+        </AuthContext.Consumer>
         <p key="name/age" onClick={this.props.click}>I'm {this.props.name} and I am {this.props.age} years old!</p>
         <p key="children" className="red bold">{this.props.children}</p>
         <input
@@ -59,7 +61,6 @@ Person.propTypes = {
   changed: PropTypes.func,
   name: PropTypes.string,
   age: PropTypes.number,
-  isAuthed: PropTypes.bool,
 };
 
 export default withClass(Person, styles.Person);

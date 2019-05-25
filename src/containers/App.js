@@ -4,6 +4,7 @@ import Persons from '../components/Persons/Persons';
 import Cockpit from '../components/Cockpit/Cockpit';
 import withClass from '../hoc/withClass';
 import Aux from '../hoc/Aux';
+import AuthContext from '../context/auth-context';
 
 class App extends Component {
   constructor(props) {
@@ -89,20 +90,25 @@ class App extends Component {
     return (
       <Aux>
         <button onClick={() => this.setState({ showCockpit: !this.state.showCockpit })}>Toggle Cockpit</button>
-        {this.state.showCockpit ?
-          <Cockpit
-            title={this.props.appTitle}
-            // persons={this.state.persons} // pass persons to cockpit for useEffect hook
-            length={this.state.persons.length}
-            showing={this.state.showPersons}
-            clicked={this.togglePersonsHandler}
-            login={this.loginHandler} /> : null}
-        {this.state.showPersons ? // if showing persons, render persons
-          <Persons
-            persons={this.state.persons}
-            clicked={this.deletePersonHandler}
-            changed={this.nameChangedHandler}
-            isAuthenticated={this.state.authenticated} /> : null}
+        <AuthContext.Provider
+          value={{
+            authenticated: this.state.authenticated,
+            login: this.loginHandler
+          }}
+        >
+          {this.state.showCockpit ?
+            <Cockpit
+              title={this.props.appTitle}
+              // persons={this.state.persons} // pass persons to cockpit for useEffect hook
+              length={this.state.persons.length}
+              showing={this.state.showPersons}
+              clicked={this.togglePersonsHandler} /> : null}
+          {this.state.showPersons ? // if showing persons, render persons
+            <Persons
+              persons={this.state.persons}
+              clicked={this.deletePersonHandler}
+              changed={this.nameChangedHandler} /> : null}
+        </AuthContext.Provider>
       </Aux>
     );
   }

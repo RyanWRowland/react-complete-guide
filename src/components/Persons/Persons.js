@@ -50,17 +50,20 @@ class Persons extends Component {
 
   render() {
     console.log('[Persons.js] rendering');
-    return this.props.persons.map((person, index) => {
-      return <Person
-        click={() => this.props.clicked(index)}
-        name={person.name}
-        age={person.age}
-        key={person.id}
-        isAuthed={this.props.isAuthenticated}
-        changed={(e) => this.props.changed(e, person.id)}>
-        I am a person!
-      </Person>
-    });
+    return (
+      this.props.persons.map((person, index) => {
+        return (
+          <Person
+            click={() => this.props.clicked(index)}
+            name={person.name}
+            age={person.age}
+            key={person.id}
+            changed={(e) => this.props.changed(e, person.id)}>
+            I am a person!
+              </Person>
+        );
+      })
+    );
   }
 }
 
