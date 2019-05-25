@@ -1,9 +1,12 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useRef } from 'react'
 import styles from './Cockpit.module.css'
 
 const Cockpit = (props) => {
+  const toggleBtnRef = useRef(null);
+
   // executes every render cycle
   useEffect(() => { // combines componentDidMount and componentDidUpdate
+    toggleBtnRef.current.click(); // has to be called AFTER render or ref is still null
     console.log('[Cockpit.js] useEffect');
     // can send http request here
     const timer = setTimeout(() => {
@@ -40,6 +43,7 @@ const Cockpit = (props) => {
       <h1>{props.title}</h1>
       <p className={classes.join(' ')}>This is really working!</p>
       <button
+        ref={toggleBtnRef}
         className={props.showing ? styles.Red : ''}
         onClick={props.clicked}>Toggle Persons</button>
     </div>
