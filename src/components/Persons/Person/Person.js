@@ -17,10 +17,20 @@ import styles from './Person.module.css';
 */
 
 class Person extends Component {
+  constructor(props) {
+    super(props);
+    this.inputElementRef = React.createRef();
+  }
   // optimization: should only update/rerender component if the name has changed
   shouldComponentUpdate(nextProps, nextState) {
     return nextProps.name !== this.props.name
   }
+
+  componentDidMount() {
+    // this.inputElement.focus();
+    this.inputElementRef.current.focus();
+  }
+
 
   render() {
     console.log('[Person.js] rendering', this.props.name);
@@ -30,7 +40,13 @@ class Person extends Component {
       <Aux>
         <p key="name/age" onClick={this.props.click}>I'm {this.props.name} and I am {this.props.age} years old!</p>
         <p key="children" className="red bold">{this.props.children}</p>
-        <input key="nameInput" type="text" onChange={this.props.changed} value={this.props.name} />
+        <input
+          key="nameInput"
+          ref={this.inputElementRef}
+          // ref={(e) => this.inputElement = e}
+          type="text"
+          onChange={this.props.changed}
+          value={this.props.name} />
       </Aux>
     );
   }
