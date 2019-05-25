@@ -22,7 +22,8 @@ class Persons extends Component {
   shouldComponentUpdate(nextProps, nextState) {
     console.log('[Persons.js] shouldComponentUpdate');
     // optimization: only update/rerender if persons changes
-    return nextProps.persons !== this.props.persons;
+    return nextProps.persons !== this.props.persons ||
+      nextProps.isAuthenticated !== this.props.isAuthenticated;
     // IMPORTANT
     // only compares references, works because when an element changes
     // a new array is created and the state in App.js is set to the new array
@@ -55,6 +56,7 @@ class Persons extends Component {
         name={person.name}
         age={person.age}
         key={person.id}
+        isAuthed={this.props.isAuthenticated}
         changed={(e) => this.props.changed(e, person.id)}>
         I am a person!
       </Person>

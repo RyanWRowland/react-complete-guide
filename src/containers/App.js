@@ -22,6 +22,7 @@ class App extends Component {
     showPersons: false,
     showCockpit: true,
     changeCounter: 0,
+    authenticated: false,
   };
 
   // if just initializing state from props, just set in constructor
@@ -79,6 +80,10 @@ class App extends Component {
     });
   }
 
+  loginHandler = () => {
+    this.setState({ authenticated: true });
+  }
+
   render() {
     console.log('[App.js] rendering')
     return (
@@ -90,12 +95,14 @@ class App extends Component {
             // persons={this.state.persons} // pass persons to cockpit for useEffect hook
             length={this.state.persons.length}
             showing={this.state.showPersons}
-            clicked={this.togglePersonsHandler} /> : null}
+            clicked={this.togglePersonsHandler}
+            login={this.loginHandler} /> : null}
         {this.state.showPersons ? // if showing persons, render persons
           <Persons
             persons={this.state.persons}
             clicked={this.deletePersonHandler}
-            changed={this.nameChangedHandler} /> : null}
+            changed={this.nameChangedHandler}
+            isAuthenticated={this.state.authenticated} /> : null}
       </Aux>
     );
   }
