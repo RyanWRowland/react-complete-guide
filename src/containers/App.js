@@ -21,6 +21,7 @@ class App extends Component {
     ],
     showPersons: false,
     showCockpit: true,
+    changeCounter: 0,
   };
 
   // if just initializing state from props, just set in constructor
@@ -57,7 +58,13 @@ class App extends Component {
     const persons = [...this.state.persons];
     persons[personIndex] = person;
 
-    this.setState({ persons: persons });
+    // optional setState syntax, prefered way to update based on old state
+    this.setState((prevState, props) => {
+      return {
+        persons: persons,
+        changeCounter: prevState.changeCounter + 1
+      };
+    });
   }
 
   deletePersonHandler = (personIndex) => {
